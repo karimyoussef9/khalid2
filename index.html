@@ -1,50 +1,1097 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Doctors' Wedding</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-        }
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-        .font-cursive {
-            font-family: 'Great Vibes', cursive;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-        .bg-pattern {
             background-color: #fdfbfb;
             background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
         }
+
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-cursive {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* App Container */
+        .app-container {
+            min-height: 100vh;
+            transition: opacity 1s;
+        }
+
+        .app-container.fade-in {
+            opacity: 1;
+        }
+
+        .app-container.fade-out {
+            opacity: 0;
+        }
+
+        /* Landing Choice */
+        .landing-choice {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: white;
+        }
+
+        @media (min-width: 768px) {
+            .landing-choice {
+                flex-direction: row;
+            }
+        }
+
+        .team-section {
+            position: relative;
+            height: 50%;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.7s;
+        }
+
+        @media (min-width: 768px) {
+            .team-section {
+                height: 100%;
+                width: 50%;
+            }
+
+            .team-section:hover {
+                width: 60%;
+            }
+        }
+
+        .team-groom {
+            background-color: #eff6ff;
+        }
+
+        .team-bride {
+            background-color: #fff1f2;
+        }
+
+        .team-section img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            filter: grayscale(100%);
+            transition: transform 1s, filter 1s;
+        }
+
+        .team-section:hover img {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        .team-groom .gradient-overlay {
+            background: linear-gradient(to top, rgba(30, 58, 138, 0.4), transparent);
+        }
+
+        .team-bride .gradient-overlay {
+            background: linear-gradient(to top, rgba(159, 18, 57, 0.4), transparent);
+        }
+
+        .team-content {
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .icon-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            border-radius: 9999px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .icon-container svg {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .team-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        @media (min-width: 768px) {
+            .team-title {
+                font-size: 3.75rem;
+            }
+        }
+
+        .team-groom .team-title {
+            color: #1e3a8a;
+        }
+
+        .team-bride .team-title {
+            color: #9f1239;
+        }
+
+        .team-subtitle {
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .team-groom .team-subtitle {
+            color: rgba(30, 58, 138, 0.8);
+        }
+
+        .team-bride .team-subtitle {
+            color: rgba(159, 18, 57, 0.8);
+        }
+
+        .middle-divider {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .middle-divider {
+                display: flex;
+            }
+        }
+
+        .divider-heart {
+            background: white;
+            border-radius: 9999px;
+            padding: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 4px solid #fef3c7;
+        }
+
+        .divider-heart svg {
+            width: 2.5rem;
+            height: 2.5rem;
+            color: #f43f5e;
+            fill: currentColor;
+        }
+
+        /* Invitation Content */
+        .invitation-content {
+            min-height: 100vh;
+            padding-bottom: 5rem;
+        }
+
+        .invitation-groom {
+            background-color: #eff6ff;
+        }
+
+        .invitation-bride {
+            background-color: #fff1f2;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .back-button {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            color: #374151;
+        }
+
+        .back-button:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button svg {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .back-button span {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.5);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            padding: 1rem;
+            max-width: 56rem;
+            margin: 0 auto;
+            animation: fadeInUp 1s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .hero-icons svg {
+            width: 2rem;
+            height: 2rem;
+            opacity: 0.7;
+        }
+
+        .hero-divider {
+            width: 3rem;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-subtitle {
+            color: white;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.75rem;
+            color: white;
+            font-style: italic;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: 8rem;
+            }
+        }
+
+        .hero-title .ampersand {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            opacity: 0.9;
+            text-transform: lowercase;
+        }
+
+        @media (min-width: 768px) {
+            .hero-title .ampersand {
+                font-size: 6rem;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .scroll-indicator p {
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 2.5rem;
+            background: rgba(255, 255, 255, 0.4);
+            margin: 0 auto;
+        }
+
+        /* Countdown */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding-top: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .countdown {
+                gap: 2rem;
+            }
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 4rem;
+            height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .countdown-box {
+                width: 6rem;
+                height: 6rem;
+            }
+        }
+
+        .countdown-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        @media (min-width: 768px) {
+            .countdown-value {
+                font-size: 2.25rem;
+            }
+        }
+
+        .countdown-label {
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+        }
+
+        @media (min-width: 768px) {
+            .countdown-label {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Details Section */
+        .details-section {
+            max-width: 56rem;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            margin-top: -5rem;
+            position: relative;
+            z-index: 20;
+        }
+
+        .details-card {
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .details-card {
+                padding: 4rem;
+            }
+        }
+
+        .details-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .heart-icon-container {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 9999px;
+        }
+
+        .heart-icon-container.groom {
+            background-color: #eff6ff;
+        }
+
+        .heart-icon-container.bride {
+            background-color: #fff1f2;
+        }
+
+        .heart-icon-container svg {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .heart-icon-container.groom svg {
+            color: #1e3a8a;
+            fill: currentColor;
+        }
+
+        .heart-icon-container.bride svg {
+            color: #9f1239;
+            fill: currentColor;
+        }
+
+        .details-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.875rem;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .details-title {
+                font-size: 2.25rem;
+            }
+        }
+
+        .details-quote {
+            color: #4b5563;
+            line-height: 1.75;
+            max-width: 42rem;
+            margin: 0 auto;
+            font-size: 1.125rem;
+            font-style: italic;
+        }
+
+        .details-grid {
+            display: grid;
+            gap: 2rem;
+            border-top: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f3f4f6;
+            padding: 3rem 0;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .details-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .detail-icon-wrapper {
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            margin-bottom: 1rem;
+        }
+
+        .detail-icon-wrapper.calendar {
+            background-color: #fffbeb;
+        }
+
+        .detail-icon-wrapper.clock {
+            background-color: #fff1f2;
+        }
+
+        .detail-icon-wrapper.location {
+            background-color: #eff6ff;
+        }
+
+        .detail-icon-wrapper svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .detail-icon-wrapper.calendar svg {
+            color: #d97706;
+        }
+
+        .detail-icon-wrapper.clock svg {
+            color: #e11d48;
+        }
+
+        .detail-icon-wrapper.location svg {
+            color: #2563eb;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #1f2937;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-text {
+            color: #4b5563;
+        }
+
+        .detail-text-bold {
+            color: #4b5563;
+            font-weight: 600;
+        }
+
+        .directions-button {
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .directions-button a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+            text-decoration: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .directions-button a:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .directions-button.groom a {
+            background-color: #1e3a8a;
+        }
+
+        .directions-button.groom a:hover {
+            background-color: #1e40af;
+        }
+
+        .directions-button.bride a {
+            background-color: #9f1239;
+        }
+
+        .directions-button.bride a:hover {
+            background-color: #881337;
+        }
+
+        .directions-button svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        /* Medical Notes Section */
+        .medical-notes {
+            max-width: 56rem;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .medical-notes-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        .medical-notes-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .medical-notes-title.groom {
+            color: #1e3a8a;
+        }
+
+        .medical-notes-title.bride {
+            color: #9f1239;
+        }
+
+        .medical-notes-text {
+            color: #4b5563;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .medical-notes-text {
+                font-size: 1rem;
+            }
+        }
+
+        .medical-notes-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .medical-notes-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 9999px;
+            background-color: #d1d5db;
+        }
+
+        /* RSVP Section */
+        .rsvp-section {
+            max-width: 36rem;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .rsvp-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            margin: 0 auto;
+            opacity: 0.4;
+        }
+
+        .rsvp-icon.groom {
+            color: #1e3a8a;
+        }
+
+        .rsvp-icon.bride {
+            color: #9f1239;
+        }
+
+        .rsvp-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.25rem;
+            color: #1f2937;
+            font-style: italic;
+            margin: 1.5rem 0;
+        }
+
+        .rsvp-subtitle {
+            color: #6b7280;
+            font-weight: 300;
+            font-size: 1.125rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .rsvp-button {
+            width: 100%;
+            color: white;
+            padding: 1.25rem;
+            border-radius: 1rem;
+            font-weight: bold;
+            font-size: 1.25rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .rsvp-button.groom {
+            background-color: #1e3a8a;
+        }
+
+        .rsvp-button.groom:hover {
+            background-color: #1e40af;
+        }
+
+        .rsvp-button.bride {
+            background-color: #9f1239;
+        }
+
+        .rsvp-button.bride:hover {
+            background-color: #881337;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 6rem;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5em;
+            font-weight: 300;
+        }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
-  }
-}
-</script>
 </head>
-<body class="bg-pattern">
-    <div id="root"></div>
+<body>
+    <div id="app" class="app-container fade-out"></div>
+
+    <script>
+        // SVG Icons
+        const icons = {
+            stethoscope: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.674 2.5a.5.5 0 0 0-.348.5V12"/><path d="M18.674 2.5a.5.5 0 0 1 .348.5V12"/><path d="M6 12h12"/><path d="M6 12a6 6 0 1 0 12 0 6 6 0 1 0-12 0"/></svg>`,
+            heart: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>`,
+            arrowLeft: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>`,
+            calendar: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>`,
+            clock: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+            mapPin: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`,
+            mail: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`,
+            microscope: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v4a2 2 0 0 1-2 2"/><circle cx="13" cy="8" r="1"/></svg>`
+        };
+
+        // State
+        let selectedTeam = null;
+        let isVisible = false;
+
+        // Countdown Timer
+        function calculateTimeLeft() {
+            const targetDate = new Date('2026-02-01T18:00:00').getTime();
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                return {
+                    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                    minutes: Math.floor((difference / 1000 / 60) % 60),
+                    seconds: Math.floor((difference / 1000) % 60)
+                };
+            }
+            return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+        }
+
+        function updateCountdown() {
+            const timeLeft = calculateTimeLeft();
+            const items = [
+                { label: 'Days', value: timeLeft.days },
+                { label: 'Hours', value: timeLeft.hours },
+                { label: 'Minutes', value: timeLeft.minutes },
+                { label: 'Seconds', value: timeLeft.seconds }
+            ];
+
+            const countdownHTML = items.map(item => `
+                <div class="countdown-item">
+                    <div class="countdown-box">
+                        <span class="countdown-value">${item.value.toString().padStart(2, '0')}</span>
+                    </div>
+                    <span class="countdown-label">${item.label}</span>
+                </div>
+            `).join('');
+
+            const countdownEl = document.querySelector('.countdown');
+            if (countdownEl) {
+                countdownEl.innerHTML = countdownHTML;
+            }
+        }
+
+        // Landing Choice Component
+        function renderLandingChoice() {
+            return `
+                <div class="landing-choice">
+                    <div class="team-section team-groom" onclick="handleSelectTeam('groom')">
+                        <img src="https://picsum.photos/id/1027/1200/1800" alt="Groom side">
+                        <div class="gradient-overlay"></div>
+                        <div class="team-content">
+                            <div class="icon-container">
+                                ${icons.stethoscope.replace('currentColor', '#1e3a8a')}
+                            </div>
+                            <h2 class="team-title">Team Groom</h2>
+                            <p class="team-subtitle">The Doctor's Side</p>
+                        </div>
+                    </div>
+
+                    <div class="middle-divider">
+                        <div class="divider-heart">
+                            ${icons.heart}
+                        </div>
+                    </div>
+
+                    <div class="team-section team-bride" onclick="handleSelectTeam('bride')">
+                        <img src="https://picsum.photos/id/64/1200/1800" alt="Bride side">
+                        <div class="gradient-overlay"></div>
+                        <div class="team-content">
+                            <div class="icon-container">
+                                ${icons.heart.replace('currentColor', '#f43f5e')}
+                            </div>
+                            <h2 class="team-title">Team Bride</h2>
+                            <p class="team-subtitle">The Doctor's side</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Invitation Content Component
+        function renderInvitationContent(team) {
+            const accentColor = team === 'groom' ? 'groom' : 'bride';
+            const bgClass = team === 'groom' ? 'invitation-groom' : 'invitation-bride';
+            const buttonClass = team === 'groom' ? 'groom' : 'bride';
+
+            return `
+                <div class="invitation-content ${bgClass}">
+                    <nav class="nav-bar">
+                        <button class="back-button" onclick="handleReset()">
+                            ${icons.arrowLeft}
+                            <span>Change Team</span>
+                        </button>
+                    </nav>
+
+                    <section class="hero-section">
+                        <div class="hero-background">
+                            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop" alt="Background">
+                            <div class="hero-overlay"></div>
+                        </div>
+
+                        <div class="hero-content">
+                            <div class="hero-icons">
+                                ${icons.stethoscope.replace('currentColor', 'white')}
+                                <div class="hero-divider"></div>
+                                ${icons.microscope.replace('currentColor', 'white')}
+                            </div>
+
+                            <p class="hero-subtitle">The Doctors are Paging You</p>
+                            
+                            <h1 class="hero-title">
+                                Dr. Omar <br>
+                                <span class="ampersand">&</span> <br>
+                                Dr. Layla
+                            </h1>
+
+                            <div class="countdown"></div>
+                        </div>
+                        
+                        <div class="scroll-indicator">
+                            <p>Scroll to Open</p>
+                            <div class="scroll-line"></div>
+                        </div>
+                    </section>
+
+                    <section class="details-section">
+                        <div class="details-card">
+                            <div class="details-header">
+                                <div class="heart-icon-container ${accentColor}">
+                                    ${icons.heart}
+                                </div>
+                                <h3 class="details-title">A Prescription for Everlasting Love</h3>
+                                <p class="details-quote">
+                                    "Medicine is my profession, but you are my heart's vital sign. Please join us as we begin our residency together in life."
+                                </p>
+                            </div>
+
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <div class="detail-icon-wrapper calendar">
+                                        ${icons.calendar}
+                                    </div>
+                                    <h4 class="detail-label">When</h4>
+                                    <p class="detail-text">February 1st, 2026</p>
+                                    <p class="detail-text-bold">Sunday Evening</p>
+                                </div>
+
+                                <div class="detail-item">
+                                    <div class="detail-icon-wrapper clock">
+                                        ${icons.clock}
+                                    </div>
+                                    <h4 class="detail-label">Time</h4>
+                                    <p class="detail-text">6:00 PM Reception</p>
+                                    <p class="detail-text">7:00 PM Dinner</p>
+                                </div>
+
+                                <div class="detail-item">
+                                    <div class="detail-icon-wrapper location">
+                                        ${icons.mapPin}
+                                    </div>
+                                    <h4 class="detail-label">Where</h4>
+                                    <p class="detail-text">Sky Venue Palace</p>
+                                    <p class="detail-text">New Cairo, Egypt</p>
+                                </div>
+                            </div>
+
+                            <div class="directions-button ${buttonClass}">
+                                <a href="https://maps.google.com" target="_blank">
+                                    ${icons.mapPin.replace('currentColor', 'white')}
+                                    <span>Get Directions</span>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="medical-notes">
+                        <div class="medical-notes-card">
+                            <h4 class="medical-notes-title ${accentColor}">Special Diagnosis</h4>
+                            <p class="medical-notes-text">
+                                Your presence is the only treatment we require. <br>
+                                No gifts please, just your joyful hearts and dancing shoes.
+                            </p>
+                            <div class="medical-notes-dots">
+                                <div class="medical-notes-dot"></div>
+                                <div class="medical-notes-dot"></div>
+                                <div class="medical-notes-dot"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="rsvp-section">
+                        <div class="space-y-6">
+                            <div class="rsvp-icon ${accentColor}">
+                                ${icons.mail}
+                            </div>
+                            <h2 class="rsvp-title">R.S.V.P</h2>
+                            <p class="rsvp-subtitle">Kindly respond by January 1st, 2026</p>
+                            <div style="padding-top: 1.5rem;">
+                                <button class="rsvp-button ${buttonClass}" onclick="alert('RSVP functionality can be added here!')">
+                                    Count Me In!
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <footer>
+                        Dr. Omar & Dr. Layla • 2026
+                    </footer>
+                </div>
+            `;
+        }
+
+        // Event Handlers
+        function handleSelectTeam(team) {
+            selectedTeam = team;
+            render();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function handleReset() {
+            selectedTeam = null;
+            render();
+        }
+
+        // Render Function
+        function render() {
+            const app = document.getElementById('app');
+            if (!selectedTeam) {
+                app.innerHTML = renderLandingChoice();
+            } else {
+                app.innerHTML = renderInvitationContent(selectedTeam);
+                updateCountdown();
+                // Start countdown interval
+                if (window.countdownInterval) {
+                    clearInterval(window.countdownInterval);
+                }
+                window.countdownInterval = setInterval(updateCountdown, 1000);
+            }
+        }
+
+        // Initialize
+        function init() {
+            render();
+            setTimeout(() => {
+                isVisible = true;
+                document.getElementById('app').classList.remove('fade-out');
+                document.getElementById('app').classList.add('fade-in');
+            }, 10);
+        }
+
+        // Start the app
+        init();
+    </script>
 </body>
 </html>
